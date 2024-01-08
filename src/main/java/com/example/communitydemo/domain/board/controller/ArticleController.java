@@ -1,4 +1,6 @@
+
 package com.example.communitydemo.domain.board.controller;
+
 
 import com.example.communitydemo.domain.board.dto.ArticleDto;
 import com.example.communitydemo.domain.board.service.ArticleService;
