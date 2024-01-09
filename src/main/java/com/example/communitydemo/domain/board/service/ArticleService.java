@@ -5,6 +5,8 @@ import com.example.communitydemo.domain.board.entity.Article;
 import com.example.communitydemo.domain.board.repository.ArticleRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ArticleService {
     private final ArticleRepository repository;
@@ -25,7 +27,8 @@ public class ArticleService {
         Article savedData = repository.save(article);
         System.out.println(savedData.toString());
 
-        ArticleDto.ArticleBaseResponse response = new ArticleDto.ArticleBaseResponse(
+
+        return new ArticleDto.ArticleBaseResponse(
                 savedData.getId(),
                 savedData.getCategory_id(),
                 request.getCategory_name(),
@@ -37,10 +40,16 @@ public class ArticleService {
         );
 
 
-        return response;
-
-
     }
 
 
+    public Boolean articlePasswordCheck(Long id, String password) {
+        Optional<Article> result = repository.findById(id);
+
+        if (result.isPresent()) {
+            Article article = result.get();
+            return article.getPassword().equals(password);
+        }
+        return false;
+    }
 }

@@ -39,11 +39,12 @@ public class ArticleController {
 
     // 게시글 수정 가능 여부 체크 ( 비밀번호 )
     @PostMapping("{id}/password-check")
-    public void articlePasswordCheck(
+    public Boolean articlePasswordCheck(
             @PathVariable Long id,
             String password
             ){
         // TODO: 게시글 비밀번호 체크 후 가능 여부 응답
+        return articleService.articlePasswordCheck(id,password);
     }
     // 게시글 수정
     @PatchMapping("{id}")
