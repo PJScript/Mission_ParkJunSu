@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * 4. 게시글 수정 가능 여부 체크
  * 5. 게시글 이미지 추가
  */
-@RestController
+@Controller
 @RequestMapping("/article")
 public class ArticleController {
     private final ArticleService articleService;
@@ -26,16 +26,18 @@ public class ArticleController {
 
     // 게시글 조회
     @GetMapping("{id}")
-    public String articleView(Model model, @PathVariable Long id) {
+    public String articleRead(Model model, @PathVariable Long id) {
+        model.addAttribute("article",articleService.articleRead(id));
         return "article";
     }
 
 
+
     // 게시글 작성
     @PostMapping("{id}")
-    public ArticleDto.ArticleBaseResponse articleCreate(
+    public void articleCreate(
             @RequestBody ArticleDto.ArticleCreateRequest request) {
-        return articleService.create(request);
+//        return articleService.create(request);
     }
 
     // 게시글 수정 가능 여부 체크 ( 비밀번호 )
@@ -44,14 +46,12 @@ public class ArticleController {
             @PathVariable Long id,
             @RequestBody ArticleDto.ArticlePasswordCheckRequest request
     ) {
-        // TODO: 게시글 비밀번호 체크 후 가능 여부 응답
-
         return articleService.articlePasswordCheck(id,request);
     }
 
     // 게시글 수정
     @PatchMapping("{id}")
-    public ArticleDto.ArticleBaseResponse articleModify(
+    public void articleModify(
             @PathVariable
             Long id,
             @RequestBody ArticleDto.ArticleUpdateReuqest request
@@ -59,9 +59,9 @@ public class ArticleController {
 
     ) {
 
-        return articleService.articleUpdate(
-                id,request
-        );
+//        return articleService.articleUpdate(
+//                id,request
+//        );
         // TODO: 게시글 최종 수정 버튼 클릭 시 비밀번호 다시 체크
     }
 

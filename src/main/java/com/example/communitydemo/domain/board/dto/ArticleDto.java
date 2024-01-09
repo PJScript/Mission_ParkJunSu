@@ -1,5 +1,8 @@
 package com.example.communitydemo.domain.board.dto;
 
+import com.example.communitydemo.domain.board.entity.Article;
+import com.example.communitydemo.domain.board.entity.Category;
+import lombok.*;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -8,91 +11,75 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 
-public class ArticleDto {
-    public static class ArticleBaseResponse {
-        public ArticleBaseResponse(Long id, int category_id, String category_name, String title, String content, int view_count, LocalDateTime created_at, LocalDateTime updated_at) {
-            this.id = id;
-            this.category_id = category_id;
-            this.category_name = category_name;
-            this.title = title;
-            this.content = content;
-            this.view_count = view_count;
-            this.created_at = created_at;
-            this.updated_at = updated_at;
-        }
 
+public class ArticleDto {
+
+
+    /**
+     * article 기본 응답
+     * @http-type response
+     */
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @RequiredArgsConstructor
+    public static class ArticleBaseResponse {
         private Long id;
-        private int category_id;
-        private String category_name;
+        private Category category;
         private String title;
         private String content;
         private int view_count;
+        private LocalDateTime created_at;
+        private LocalDateTime updated_at;
+
+        /**
+         * 조회후 반환된 엔티티를 DTO로 변환해주는 메서드
+         * **/
+        public static ArticleBaseResponse toDTO(Article entity){
+            return ArticleBaseResponse.builder()
+                    .id(entity.getId())
+                    .content(entity.getContent())
+                    .category(entity.getCategory())
+                    .title(entity.getTitle())
+                    .view_count(entity.getView_count())
+                    .created_at(entity.getCreated_at())
+                    .updated_at(entity.getUpdated_at())
+                    .build();
+        }
 
 
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @AllArgsConstructor
+    @RequiredArgsConstructor
+    public static class ArticleListPreviewResponse {
+        private Long id;
+        private String title;
+        private int view_count;
         private LocalDateTime created_at;
 
-        private LocalDateTime updated_at;
-        // static factory method
-        // static factory method
-
-
-
-        public Long getId() {
-            return id;
-        }
-        public int getCategory_id(){return category_id;}
-        public String getCategory_name() {
-            return category_name;
-        }
-        public String getTitle() {
-            return title;
-        }
-        public String getContent() {
-            return content;
-        }
-        public int getView_count() {
-            return view_count;
-        }
-        public LocalDateTime getCreated_at() {
-            return created_at;
-        }
-        public LocalDateTime getUpdated_at() {
-            return updated_at;
-        }
-
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public void setCategory_id(int category_id) {
-            this.category_id = category_id;
-        }
-
-        public void setCategory_name(String category_name) {
-            this.category_name = category_name;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public void setView_count(int view_count) {
-            this.view_count = view_count;
-        }
-
-        public void setCreated_at(LocalDateTime created_at) {
-            this.created_at = created_at;
-        }
-
-        public void setUpdated_at(LocalDateTime updated_at) {
-            this.updated_at = updated_at;
+        public static ArticleListPreviewResponse toDTO(Article entity){
+            return ArticleListPreviewResponse.builder()
+                    .id(entity.getId())
+                    .title(entity.getTitle())
+                    .view_count(entity.getView_count())
+                    .created_at(entity.getCreated_at())
+                    .build();
         }
     }
 
+
+    /**
+     * article 생성 요청 dto
+     * @http-type request
+     */
+    @Getter
+    @Setter
+    @RequiredArgsConstructor
     public static class ArticleCreateRequest {
         private String title;
         private String content;
@@ -100,55 +87,11 @@ public class ArticleDto {
         private String password;
         private int category_id;
         private String category_name;
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public int getView_count() {
-            return view_count;
-        }
-
-        public void setView_count(int view_count) {
-            this.view_count = view_count;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public int getCategory_id() {
-            return category_id;
-        }
-
-        public void setCategory_id(int category_id) {
-            this.category_id = category_id;
-        }
-
-        public String getCategory_name() {
-            return category_name;
-        }
-
-        public void setCategory_name(String category_name) {
-            this.category_name = category_name;
-        }
     }
+
+    @Getter
+    @Setter
+    @RequiredArgsConstructor
     public static class ArticlePasswordCheckRequest{
 
         private String password;
@@ -165,43 +108,32 @@ public class ArticleDto {
         }
 
 
-
-        public String getPassword() {
-            return password;
-        }
     }
+
+
+    /**
+     * article 수정 요청 dto
+     * @http-type request
+     */
+    @Getter
+    @Setter
+    @RequiredArgsConstructor
     public static class ArticleUpdateReuqest {
       private int category_id;
       private String category_name;
       private String title;
       private String content;
 
-        public int getCategory_id() {
-            return category_id;
-        }
-
         public void setCategory_id(int category_id) {
             this.category_id = category_id;
-        }
-
-        public String getCategory_name() {
-            return category_name;
         }
 
         public void setCategory_name(String category_name) {
             this.category_name = category_name;
         }
 
-        public String getTitle() {
-            return title;
-        }
-
         public void setTitle(String title) {
             this.title = title;
-        }
-
-        public String getContent() {
-            return content;
         }
 
         public void setContent(String content) {

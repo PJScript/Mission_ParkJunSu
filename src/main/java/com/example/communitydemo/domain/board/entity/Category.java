@@ -1,15 +1,19 @@
 package com.example.communitydemo.domain.board.entity;
 
 import com.example.communitydemo.domain.GlobalTypes;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
+@Getter
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,64 +23,34 @@ public class Category {
     private int sort_order;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
-    private GlobalTypes.YesOrNo is_deleted;
+    private boolean is_deleted;
 
-    public int getSort_order() {
-        return sort_order;
+    @OneToMany(mappedBy = "category")
+    private List<Article> articles = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return sort_order == category.sort_order && is_deleted == category.is_deleted && Objects.equals(id, category.id) && Objects.equals(label, category.label) && Objects.equals(value, category.value) && Objects.equals(created_at, category.created_at) && Objects.equals(updated_at, category.updated_at) && Objects.equals(articles, category.articles);
     }
 
-    public void setSort_order(int sort_order) {
-        this.sort_order = sort_order;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, label, value, sort_order, created_at, updated_at, is_deleted, articles);
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
-    }
-
-    public void setUpdated_at(LocalDateTime updated_at) {
-        this.updated_at = updated_at;
-    }
-    public Category() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public LocalDateTime getCreated_at() {
-        return created_at;
-    }
-
-    public LocalDateTime getUpdated_at() {
-        return updated_at;
-    }
-
-    public GlobalTypes.YesOrNo getIs_deleted() {
-        return is_deleted;
-    }
-
-    public void setIs_deleted(GlobalTypes.YesOrNo is_deleted) {
-        this.is_deleted = is_deleted;
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                ", value='" + value + '\'' +
+                ", sort_order=" + sort_order +
+                ", created_at=" + created_at +
+                ", updated_at=" + updated_at +
+                ", is_deleted=" + is_deleted +
+                '}';
     }
 }
