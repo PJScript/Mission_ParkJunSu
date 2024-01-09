@@ -18,11 +18,8 @@ import java.util.Date;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-
     private Long id;
     private String content;
-    private int article_id;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
     private boolean is_deleted;

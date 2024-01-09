@@ -1,9 +1,6 @@
 package com.example.communitydemo.domain.board.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,10 +15,12 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int post_id;
     private String url;
     private String caption;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
     private boolean is_deleted;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Article article;
 }
