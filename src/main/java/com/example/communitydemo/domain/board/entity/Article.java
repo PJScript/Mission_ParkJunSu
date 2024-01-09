@@ -39,6 +39,10 @@ public class Article {
     public Article() {
 
     }
+    public Article(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
     public Article(Long id, int category_id, String title, String content, String password, Long view_count, Date created_at, Date updated_at) {
         this.id = id;
         this.category_id = category_id;
@@ -48,6 +52,7 @@ public class Article {
         this.view_count = 1;
         this.is_deleted = false;
     }
+
 
 
 

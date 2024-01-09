@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class ArticleDto {
     public static class ArticleBaseResponse {
-        public ArticleBaseResponse(Long id, int category_id, int category_name, String title, String content, int view_count, LocalDateTime created_at, LocalDateTime updated_at) {
+        public ArticleBaseResponse(Long id, int category_id, String category_name, String title, String content, int view_count, LocalDateTime created_at, LocalDateTime updated_at) {
             this.id = id;
             this.category_id = category_id;
             this.category_name = category_name;
@@ -23,7 +23,7 @@ public class ArticleDto {
 
         private Long id;
         private int category_id;
-        private int category_name;
+        private String category_name;
         private String title;
         private String content;
         private int view_count;
@@ -41,7 +41,7 @@ public class ArticleDto {
             return id;
         }
         public int getCategory_id(){return category_id;}
-        public int getCategory_name() {
+        public String getCategory_name() {
             return category_name;
         }
         public String getTitle() {
@@ -68,7 +68,7 @@ public class ArticleDto {
             this.category_id = category_id;
         }
 
-        public void setCategory_name(int category_name) {
+        public void setCategory_name(String category_name) {
             this.category_name = category_name;
         }
 
@@ -99,7 +99,7 @@ public class ArticleDto {
         private int view_count;
         private String password;
         private int category_id;
-        private int category_name;
+        private String category_name;
 
         public String getTitle() {
             return title;
@@ -141,13 +141,74 @@ public class ArticleDto {
             this.category_id = category_id;
         }
 
-        public int getCategory_name() {
+        public String getCategory_name() {
             return category_name;
         }
 
-        public void setCategory_name(int category_name) {
+        public void setCategory_name(String category_name) {
             this.category_name = category_name;
         }
     }
+    public static class ArticlePasswordCheckRequest{
 
-}
+        private String password;
+
+
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public ArticlePasswordCheckRequest(Long id, String password) {
+
+            this.password = password;
+        }
+
+
+
+        public String getPassword() {
+            return password;
+        }
+    }
+    public static class ArticleUpdateReuqest {
+      private int category_id;
+      private String category_name;
+      private String title;
+      private String content;
+
+        public int getCategory_id() {
+            return category_id;
+        }
+
+        public void setCategory_id(int category_id) {
+            this.category_id = category_id;
+        }
+
+        public String getCategory_name() {
+            return category_name;
+        }
+
+        public void setCategory_name(String category_name) {
+            this.category_name = category_name;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+    }
+
+    }
+
+
