@@ -37,6 +37,18 @@ public class CategoryService {
         );
 
     }
+    public CategoryDto.CategoryBaseResponse findByValue(String value){
+        Category category = repository.findByCategoryValue(value);
+
+        return new CategoryDto.CategoryBaseResponse(
+                category.getId(),
+                category.getLabel(),
+                category.getValue(),
+                category.getSort_order(),
+                category.getCreated_at(),
+                category.getUpdated_at()
+        );
+    }
 
     /**
      * 카테고리 아이디를 통해 해당 카테고리의 게시물만 불러오는 메서드

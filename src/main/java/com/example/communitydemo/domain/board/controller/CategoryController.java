@@ -21,6 +21,17 @@ public class CategoryController {
             @PathVariable String value
     ) {
         model.addAttribute("articles", categoryService.getArticleListPreview(value));
+        model.addAttribute("category",categoryService.findByValue(value));
         return "board";
     }
+
+    @GetMapping("{value}/write")
+    public String writeView(
+            Model model,
+            @PathVariable String value
+    ){
+        return "articleWrite";
+    }
+
+
 }
