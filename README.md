@@ -134,10 +134,7 @@
 ```sh
 git clone https://github.com/PJScript/Mission_ParkJunSu.git
 ```
-## API Docs
-```sh
-http://localhost:8080/swagger-ui/index.html
-```
+
 
 
 
