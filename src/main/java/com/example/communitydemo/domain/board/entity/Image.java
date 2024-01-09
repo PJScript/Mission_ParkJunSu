@@ -1,27 +1,26 @@
 package com.example.communitydemo.domain.board.entity;
 
-import com.example.communitydemo.domain.GlobalTypes;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @Entity
-@EntityListeners(AuditingEntityListener.class)
-public class HashTag {
+@RequiredArgsConstructor
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String label;
-    private String value;
+    private int post_id;
+    private String url;
+    private String caption;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
     private boolean is_deleted;
