@@ -33,6 +33,8 @@ public class ArticleController {
         return "article";
     }
 
+
+
     // 게시글 수정 view
     @GetMapping("{id}/modify")
     public String articleModifyView(Model model, @PathVariable Long id){
@@ -42,12 +44,7 @@ public class ArticleController {
 
 
 
-    // 게시글 작성
-    @PostMapping("{id}")
-    public void articleCreate(
-            @RequestBody ArticleDto.ArticleCreateRequest request) {
-//        return articleService.create(request);
-    }
+
 
     // 게시글 수정 가능 여부 체크 ( 비밀번호 )
     @PostMapping("{id}/password-check")

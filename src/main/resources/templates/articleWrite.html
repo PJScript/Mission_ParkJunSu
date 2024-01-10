@@ -7,13 +7,17 @@
     <title>게시글 작성</title>
 </head>
 <body class="p-5">
+
 <h1 class="mb-4">게시글 작성</h1>
 <form action="/category" method="post">
     <div class="mb-4">
-        <label for="category-select" class="form-label" aria-label="Default select example">게시판 선택</label>-
-            <select id="category-select" class="form-select" name="category_id">
-                <option th:each="item : ${category}" th:value="${item.id}">[[${item.label}]]</option>
-            </select>
+        <label for="category-select" class="form-label" aria-label="Default select example">게시판 선택</label>
+
+        <select id="category-select" class="form-select" name="category_id">
+            <option th:each="item : ${category}" th:value="${item.id}"
+                    th:data-url="@{/category/{value}/write(value=${item.value})}" th:text="${item.label}"></option>
+        </select>
+
     </div>
 
     <div class="mb-4">
@@ -23,17 +27,48 @@
 
     <div class="mb-4">
         <label for="content-area" class="form-label">내용</label>
-        <textarea type="text" class="form-control" id="content-area"  name="content" placeholder="내용을 입력 해주세요"></textarea>
+        <textarea type="text" class="form-control" id="content-area" name="content"
+                  placeholder="내용을 입력 해주세요"></textarea>
     </div>
 
     <div>
         <label for="content-password" class="form-label">비밀번호</label>
-        <input  class="form-control" id="content-password" type="password" name="password" placeholder="비밀번호를 입력 해주세요">
+        <input class="form-control" id="content-password" type="password" name="password" placeholder="비밀번호를 입력 해주세요">
     </div>
 
     <input type="submit" class="btn btn-primary mt-3"></input>
     <a href="javascript:window.history.back();" class="btn btn-light mt-3">취소</a>
 
 </form>
+
+
+<script>
+    document.getElementById('category-select').addEventListener('change', function(e) {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const url = selectedOption.getAttribute('data-url');
+        if(url) {
+            window.history.pushState({}, '', url); // 주소 표시줄의 URL만 변경
+        }
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // URL에서 카테고리 이름 추출 (예: '/category/issue/write')
+        const pathSegments = window.location.pathname.split('/');
+        const categoryName = pathSegments[2]; // 'issue'
+
+        // <select> 요소 가져오기
+        const selectElement = document.getElementById('category-select');
+
+        // 카테고리 이름과 일치하는 <option> 찾기
+        for (let option of selectElement.options) {
+            if (option.getAttribute('data-url').includes('/' + categoryName + '/')) {
+                selectElement.value = option.value;
+                break;
+            }
+        }
+    });
+
+</script>
 </body>
 </html>
