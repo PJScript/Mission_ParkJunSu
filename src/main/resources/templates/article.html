@@ -23,18 +23,31 @@
     <a href="" type="button" class="btn light-gray mt-3">삭제하기</a>
 
 </div>
-<ul class="mt-3 p-3">
+<div th:if="${comments.isEmpty()}">
+    댓글이 없습니다
+</div>
+<ul th:unless="${comments.isEmpty()}"
+    th:each="item : ${comments}"
+    class="mt-3 p-3">
+
     <li class="row border-bottom border-1 mb-2 pb-2">
         <!-- p 요소: 유연한 너비 할당 -->
+        <div class="col" style="flex-grow: 1; min-width: 100px; max-width:100px; color:grey;font-size:12px;"> <!-- flex-grow를 추가하여 공간 채우기 -->
+            <p style="word-break: break-all; margin-bottom: 0;"> <!-- margin-bottom: 0; 추가 -->
+                [[${item.nickname}]]
+            </p>
+        </div>
         <div class="col" style="flex-grow: 1; min-width: 0;"> <!-- flex-grow를 추가하여 공간 채우기 -->
             <p style="word-break: break-all; margin-bottom: 0;"> <!-- margin-bottom: 0; 추가 -->
-
+[[${item.content}]]
             </p>
         </div>
 
         <!-- 1일전과 X 버튼: 고정된 너비 할당 -->
-        <div class="row" style="white-space: nowrap; max-width: 200px"> <!-- col-auto 클래스 사용 -->
-            <div class="col" style="max-width: 150px; color:grey; font-size:14px; display: flex; justify-content: end;">1일전</div>
+        <div class="row" style="white-space: nowrap; max-width: 270px"> <!-- col-auto 클래스 사용 -->
+            <div class="col" style="max-width: 200px; color:grey; font-size:14px; display: flex; justify-content: end;">
+                [[${item.created_at}]]
+            </div>
             <button class="col btn btn-sm" style="max-width: 44px; max-height: 30px; background: rgb(128,128,128,0.3); color: red; ">삭제</button>
         </div>
     </li>
@@ -44,6 +57,7 @@
 
 <form th:action="@{/article/{articleId}/comment(articleId=${article.id})}" method="post" class="mt-4 p-3 border-top border-2 border-primary">
     <label for="comment-area">댓글</label>
+
     <div class="row mb-3">
         <div class="col" style="max-width: 160px">
             <label for="nickname-input"></label>

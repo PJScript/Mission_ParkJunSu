@@ -51,7 +51,6 @@ public class ArticleService {
 
     }
 
-
     public Boolean articlePasswordCheck(Long id,ArticleDto.ArticlePasswordCheckRequest request) {
         Optional<Article> result = articleRepository.findById(id);
 

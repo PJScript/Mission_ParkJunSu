@@ -4,6 +4,7 @@ import com.example.communitydemo.domain.board.dto.CommentDto;
 import com.example.communitydemo.domain.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -22,6 +23,11 @@ public class CommentController {
         commentService.createComment(request, id);
         return String.format("redirect:/article/%d", id);
     }
+
+
+
+
+
 
 
 

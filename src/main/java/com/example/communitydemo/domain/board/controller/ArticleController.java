@@ -3,12 +3,16 @@ package com.example.communitydemo.domain.board.controller;
 
 
 import com.example.communitydemo.domain.board.dto.ArticleDto;
+import com.example.communitydemo.domain.board.dto.CommentDto;
 import com.example.communitydemo.domain.board.service.ArticleService;
 import com.example.communitydemo.domain.board.service.CategoryService;
+import com.example.communitydemo.domain.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 1. 게시글 조회
@@ -22,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/article")
 public class ArticleController {
     private final ArticleService articleService;
-    private final CategoryService categoryService;
+    private final CommentService commentService;
 
 
 
@@ -30,6 +34,8 @@ public class ArticleController {
     @GetMapping("{id}")
     public String articleReadView(Model model, @PathVariable Long id) {
         model.addAttribute("article",articleService.articleRead(id));
+        List<CommentDto.CommentBaseResponse> comments = commentService.getComment(id);
+        model.addAttribute("comments",comments);
         return "article";
     }
 
