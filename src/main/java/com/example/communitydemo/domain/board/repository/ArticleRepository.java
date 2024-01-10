@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
-    @Query("SELECT a FROM Article a WHERE a.category.value = :categoryValue AND a.is_deleted = false")
+    @Query("SELECT a FROM Article a WHERE a.category.value = :categoryValue AND a.is_deleted = false ORDER BY a.id DESC")
     List<Article> findArticleByCategory(@Param("categoryValue") String categoryValue);
 
-    @Query("SELECT a FROM Article a WHERE a.is_deleted = false")
+    @Query("SELECT a FROM Article a WHERE a.is_deleted = false ORDER BY a.id DESC")
     List<Article> findAllWithNotDeleted();
 
 
