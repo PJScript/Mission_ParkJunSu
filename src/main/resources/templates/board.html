@@ -7,9 +7,9 @@
     <title>게시글 목록</title>
 </head>
 <body class="p-5">
-<h1 th:text="${category.label}"></h1>
+<h1 th:text="${category.label}" class="mb-5"></h1>
 
-<div th:each="item : ${articles}" class="pt-5 pb-5">
+<div th:each="item : ${articles}" \>
     <div>
         <a th:text="${item.title}"
            th:href="@{/article/{articleNumber}(articleNumber=${item.id} )}"></a>
