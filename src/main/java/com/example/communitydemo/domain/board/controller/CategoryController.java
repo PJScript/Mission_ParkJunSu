@@ -30,6 +30,7 @@ public class CategoryController {
             Model model,
             @PathVariable String value
     ){
+        model.addAttribute("category",categoryService.findAllCategory());
         return "articleWrite";
     }
 
