@@ -4,6 +4,7 @@ package com.example.communitydemo.domain.board.controller;
 
 import com.example.communitydemo.domain.board.dto.ArticleDto;
 import com.example.communitydemo.domain.board.dto.CommentDto;
+import com.example.communitydemo.domain.board.entity.Article;
 import com.example.communitydemo.domain.board.service.ArticleService;
 import com.example.communitydemo.domain.board.service.CategoryService;
 import com.example.communitydemo.domain.board.service.CommentService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 1. 게시글 조회
@@ -30,13 +32,16 @@ public class ArticleController {
     private final CommentService commentService;
 
 
-
-    // 게시글 조회 view
+    /**
+     * 게시글 조회 view
+     * @param id 게시글 고유 아이디
+     */
     @GetMapping("{id}")
     public String articleReadView(Model model, @PathVariable Long id) {
         model.addAttribute("article",articleService.articleRead(id));
         List<CommentDto.CommentBaseResponse> comments = commentService.getComment(id);
         model.addAttribute("comments",comments);
+        System.out.println("아티클 요청");
         return "article";
     }
 
@@ -54,8 +59,8 @@ public class ArticleController {
     }
 
     /**
-
      * 게시글 수정 view
+     * @param id 게시글 고유 아이디
      */
     @GetMapping("{id}/modify")
     public String articleModifyView(
@@ -79,7 +84,7 @@ public class ArticleController {
 
     /**
      * 게시글 수정 전 비밀번호 검증 페이지
-     * @return
+     * @param id 게시글 고유아이디
      */
     @GetMapping("{id}/modify/password-check")
     public String articleModifyPasswordCheckView(
@@ -87,6 +92,19 @@ public class ArticleController {
             @PathVariable("id") Long id){
         model.addAttribute("articleId",id);
         return "articleModifyPasswordCheck";
+    }
+
+    /**
+     * 게시글 삭제 전 비밀번호 검증 페이지
+     * @param id 게시글 고유 아이디
+     */
+    @GetMapping("{id}/delete/password-check")
+    public String articleDeletePasswordCheckView(
+            Model model,
+            @PathVariable("id") Long id
+    ){
+        model.addAttribute("articleId",id);
+        return "articleDeletePasswordCheck";
     }
 
 
@@ -109,22 +127,46 @@ public class ArticleController {
         }
     }
 
+    /**
+     * 게시글 삭제시 비밀번호 체크
+     * @param id 게시글 고유 번호
+     */
     @PostMapping("{id}/delete/password-check")
-    public void articleDeletePasswordCheck(
+    public String articleDeletePasswordCheck(
             @PathVariable Long id,
-            @RequestBody ArticleDto.ArticlePasswordCheckRequest request
+            @ModelAttribute ArticleDto.ArticlePasswordCheckRequest request
     ) {
-//        return articleService.articlePasswordCheck(id,request);
+        boolean isPossible = articleService.articlePasswordCheck(id, request);
+
+
+        if(isPossible){
+            Optional<Article> updatedArticle = articleService.delete(id);
+
+            return updatedArticle
+                    .map(article -> "redirect:/category/" + article.getCategory().getValue())
+                    .orElse("redirect:/");
+        }else{
+            return "home";
+        }
+
 
     }
 
-    // 게시글 수정
-    @PatchMapping("{id}/modify")
-    public void articleModify(
+    /**
+     * 게시글 수정
+     * @param id 게시글 고유 번호
+     */
+    @PostMapping("{id}/modify")
+    public String articleModify(
             Model model,
             @PathVariable
-            Long id
-    ) {
+            Long id,
+            @ModelAttribute ArticleDto.ArticleUpdateReuqest request
+            ) {
+        System.out.printf("요청 도착 테스트");
+
+        Long newId = articleService.articleUpdate(id,request).getId();
+        return String.format("redirect:/article/%d", newId);
 
         // TODO: 게시글 최종 수정 버튼 클릭 시 비밀번호 다시 체크
     }

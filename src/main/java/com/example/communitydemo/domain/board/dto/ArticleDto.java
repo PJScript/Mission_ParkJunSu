@@ -122,26 +122,9 @@ public class ArticleDto {
     @Setter
     @RequiredArgsConstructor
     public static class ArticleUpdateReuqest {
-      private int category_id;
-      private String category_name;
       private String title;
       private String content;
 
-        public void setCategory_id(int category_id) {
-            this.category_id = category_id;
-        }
-
-        public void setCategory_name(String category_name) {
-            this.category_name = category_name;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
     }
 
 

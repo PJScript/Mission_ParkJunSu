@@ -21,7 +21,8 @@
 
     <a th:href="@{ /article/{articleNumber}/modify/password-check(articleNumber=${article.id} ) }" type="button"
        class="btn btn-primary mt-3">수정하기</a>
-    <a href="" type="button" class="btn light-gray mt-3">삭제하기</a>
+
+    <a th:href="@{/article/{id}/delete/password-check(id=${article.id})}" class="btn mt-3">삭제하기</a>
 
 </div>
 <div th:if="${comments.isEmpty()}">
@@ -33,14 +34,15 @@
 
     <li class="row border-bottom border-1 mb-2 pb-2">
         <!-- p 요소: 유연한 너비 할당 -->
-        <div class="col" style="flex-grow: 1; min-width: 100px; max-width:100px; color:grey;font-size:12px;"> <!-- flex-grow를 추가하여 공간 채우기 -->
+        <div class="col" style="flex-grow: 1; min-width: 100px; max-width:100px; color:grey;font-size:12px;">
+            <!-- flex-grow를 추가하여 공간 채우기 -->
             <p style="word-break: break-all; margin-bottom: 0;"> <!-- margin-bottom: 0; 추가 -->
                 [[${item.nickname}]]
             </p>
         </div>
         <div class="col" style="flex-grow: 1; min-width: 0;"> <!-- flex-grow를 추가하여 공간 채우기 -->
             <p style="word-break: break-all; margin-bottom: 0;"> <!-- margin-bottom: 0; 추가 -->
-[[${item.content}]]
+                [[${item.content}]]
             </p>
         </div>
 
@@ -49,14 +51,20 @@
             <div class="col" style="max-width: 200px; color:grey; font-size:14px; display: flex; justify-content: end;">
                 [[${item.created_at}]]
             </div>
-            <button class="col btn btn-sm" style="max-width: 44px; max-height: 30px; background: rgb(128,128,128,0.3); color: red; ">삭제</button>
+
+                <button
+                        class="col btn btn-sm"
+                        style="max-width: 44px; max-height: 30px; background: rgb(128,128,128,0.3); color: red; ">삭제
+                </button>
+
+
         </div>
     </li>
 </ul>
 
 
-
-<form th:action="@{/article/{articleId}/comment(articleId=${article.id})}" method="post" class="mt-4 p-3 border-top border-2 border-primary">
+<form th:action="@{/article/{articleId}/comment(articleId=${article.id})}" method="post"
+      class="mt-4 p-3 border-top border-2 border-primary">
     <label for="comment-area">댓글</label>
 
     <div class="row mb-3">

@@ -6,6 +6,7 @@ import com.example.communitydemo.domain.board.entity.Category;
 import com.example.communitydemo.domain.board.repository.ArticleRepository;
 import com.example.communitydemo.domain.board.repository.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -61,26 +62,28 @@ public class ArticleService {
         return false;
     }
 
-    public void articleUpdate(
+    public Article articleUpdate(
             Long id,ArticleDto.ArticleUpdateReuqest request
-
     ){
         Article article = articleRepository.findById(id).orElseThrow();
         article.setTitle(request.getTitle());
         article.setContent(request.getContent());
 
-        Article savedData = articleRepository.save(article);
+        return articleRepository.save(article);
+    }
 
-//        return new ArticleDto.ArticleBaseResponse(
-//                savedData.getId(),
-//                savedData.getCategory_id(),
-//                request.getCategory_name(),
-//                savedData.getTitle(),
-//                savedData.getContent(),
-//                savedData.getView_count(),
-//                savedData.getCreated_at(),
-//                savedData.getUpdated_at()
-//        );
 
+    /**
+     * 게시글 삭제하는 메서드
+     * @param id 게시글 고유 아이디
+     */
+    @Transactional
+    public Optional<Article> delete(Long id){
+        Integer updateCount = articleRepository.updateArticleLogicalDelete(id);
+
+        if (updateCount > 0) {
+            return articleRepository.findById(id);
+        }
+        return Optional.empty();
     }
 }
