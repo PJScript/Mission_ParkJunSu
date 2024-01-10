@@ -21,9 +21,6 @@ public class ArticleService {
     private final CategoryRepository categoryRepository;
 
 
-
-
-
     /**
      * 하나의 article을 조회하는 메서드
      * @param id
@@ -63,6 +60,11 @@ public class ArticleService {
         return false;
     }
 
+    /**
+     * 게시물을 수정하는 메서드
+     * @param id 게시물 고유 아이디
+     * @param request {@link com.example.communitydemo.domain.board.dto.ArticleDto.ArticleUpdateReuqest}
+     */
     public Article articleUpdate(
             Long id,ArticleDto.ArticleUpdateReuqest request
     ){
