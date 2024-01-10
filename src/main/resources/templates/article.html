@@ -18,7 +18,8 @@
     </div>
     <p th:text="${article.content}" style="font-size:16px">내용 123123 abcd @#$#@$@#$ </p>
 
-    <a th:href="@{ /article/{articleNumber}/modify(articleNumber=${article.id} ) }" type="button"
+
+    <a th:href="@{ /article/{articleNumber}/modify/password-check(articleNumber=${article.id} ) }" type="button"
        class="btn btn-primary mt-3">수정하기</a>
     <a href="" type="button" class="btn light-gray mt-3">삭제하기</a>
 
