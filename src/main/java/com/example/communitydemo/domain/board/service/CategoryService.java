@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -70,7 +71,14 @@ public class CategoryService {
      * @param category_value 카테고리의 고유 값입니다.
      */
     public List<ArticleDto.ArticleListPreviewResponse> getArticleListPreview(String category_value){
-        List<Article> articles = articleRepository.findArticleByCategory(category_value);
+        List<Article> articles;
+        if(Objects.equals(category_value, "all")){
+            articles = articleRepository.findAllWithNotDeleted();
+        }else{
+            articles = articleRepository.findArticleByCategory(category_value);
+
+        }
+
 
         if(articles.isEmpty()){
             return null;
@@ -82,5 +90,8 @@ public class CategoryService {
             return list;
         }
     }
+
+
+
 
 }

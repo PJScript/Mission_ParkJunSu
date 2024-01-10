@@ -15,6 +15,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("SELECT a FROM Article a WHERE a.category.value = :categoryValue AND a.is_deleted = false")
     List<Article> findArticleByCategory(@Param("categoryValue") String categoryValue);
 
+    @Query("SELECT a FROM Article a WHERE a.is_deleted = false")
+    List<Article> findAllWithNotDeleted();
+
 
 
     @Transactional
