@@ -6,8 +6,11 @@ import com.example.communitydemo.domain.board.entity.Article;
 import com.example.communitydemo.domain.board.entity.Category;
 import com.example.communitydemo.domain.board.repository.ArticleRepository;
 import com.example.communitydemo.domain.board.repository.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +19,23 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
-    private final CategoryRepository repository;
+    private final CategoryRepository categoryRepository;
     private final ArticleRepository articleRepository;
 
+    /**
+     * 모든 카테고리를 조회하는 메서드
+     */
     public List<Category> findAllCategory(){
-        List<Category> category = repository.findAll();
-        return  category;
+        return categoryRepository.findAll();
     }
+
+    /**
+     * 카테고리 아이디를 기준으로 카테고리를 찾는 메서드
+     * @param id 카테고리 아이디
+     */
     public CategoryDto.CategoryBaseResponse findById(Long id){
 
-        Category category = repository.findById(id).orElseThrow();
+        Category category = categoryRepository.findById(id).orElseThrow();
 
         return new CategoryDto.CategoryBaseResponse(
                 category.getId(),
@@ -37,8 +47,13 @@ public class CategoryService {
         );
 
     }
+
+    /**
+     * 카테고리 고유값을 기준으로 카테고리를 찾는 메서드
+     * @param value 카테고리 고유값
+     */
     public CategoryDto.CategoryBaseResponse findByValue(String value){
-        Category category = repository.findByCategoryValue(value);
+        Category category = categoryRepository.findByCategoryValue(value);
 
         return new CategoryDto.CategoryBaseResponse(
                 category.getId(),
@@ -65,5 +80,26 @@ public class CategoryService {
             }
             return list;
         }
+    }
+
+    /**
+     * 특정 카테고리 게시판에 글 쓰는 메서드
+     *  @param request {@link com.example.communitydemo.domain.board.dto.ArticleDto.ArticleBaseResponse}
+     */
+    public ArticleDto.ArticleBaseResponse createArticle(
+      ArticleDto.ArticleCreateRequest request
+    ){
+        System.out.println(request.getCategory_id());
+        Category category = categoryRepository.findById(request.getCategory_id())
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+
+        Article article = new Article();
+        article.setTitle(request.getTitle());
+        article.setContent(request.getContent());
+        article.setCategory(category);
+        article.setPassword(request.getPassword());
+
+        return ArticleDto.ArticleBaseResponse.toDTO(articleRepository.save(article));
+
     }
 }

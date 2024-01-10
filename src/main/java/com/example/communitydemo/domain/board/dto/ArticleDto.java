@@ -12,12 +12,13 @@ import java.util.Date;
 
 
 
+
 public class ArticleDto {
 
 
     /**
-     * article 기본 응답
-     * @http-type response
+     * @Field id 게시물의 고유 아이디
+     * @Field Category {@link com.example.communitydemo.domain.board.entity.Category}
      */
     @Getter
     @Setter
@@ -35,7 +36,9 @@ public class ArticleDto {
 
         /**
          * 조회후 반환된 엔티티를 DTO로 변환해주는 메서드
-         * **/
+         * @param entity {@link com.example.communitydemo.domain.board.entity.Article}
+         *
+         */
         public static ArticleBaseResponse toDTO(Article entity){
             return ArticleBaseResponse.builder()
                     .id(entity.getId())
@@ -79,14 +82,14 @@ public class ArticleDto {
      */
     @Getter
     @Setter
+    @Builder
+    @AllArgsConstructor
     @RequiredArgsConstructor
     public static class ArticleCreateRequest {
         private String title;
         private String content;
-        private int view_count;
         private String password;
-        private int category_id;
-        private String category_name;
+        private Long category_id;
     }
 
     @Getter
@@ -141,6 +144,7 @@ public class ArticleDto {
         }
     }
 
-    }
+
+}
 
 

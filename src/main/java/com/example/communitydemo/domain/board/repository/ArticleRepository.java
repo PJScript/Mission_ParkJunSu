@@ -10,4 +10,5 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("SELECT a FROM Article a WHERE a.category.value = ?1")
     List<Article> findArticleByCategory(String category_value);
+
 }
