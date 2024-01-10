@@ -5,6 +5,7 @@ import com.example.communitydemo.domain.board.entity.Article;
 import com.example.communitydemo.domain.board.entity.Category;
 import com.example.communitydemo.domain.board.repository.ArticleRepository;
 import com.example.communitydemo.domain.board.repository.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,24 @@ public class ArticleService {
     public ArticleDto.ArticleBaseResponse articleRead(Long id){
         Article article = articleRepository.findById(id).orElseThrow();
         return ArticleDto.ArticleBaseResponse.toDTO(article);
+
+    }
+
+    /**
+     * 특정 카테고리 게시판에 글 쓰는 메서드
+     *  @param request {@link com.example.communitydemo.domain.board.dto.ArticleDto.ArticleBaseResponse}
+     */
+    public ArticleDto.ArticleBaseResponse create(ArticleDto.ArticleCreateRequest request){
+        Category category = categoryRepository.findById(request.getCategory_id())
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+
+
+        Article article = new Article();
+        article.setTitle(request.getTitle());
+        article.setContent(request.getContent());
+        article.setCategory(category);
+        article.setPassword(request.getPassword());
+        return ArticleDto.ArticleBaseResponse.toDTO(articleRepository.save(article));
 
     }
 

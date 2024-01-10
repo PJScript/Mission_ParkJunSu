@@ -82,24 +82,4 @@ public class CategoryService {
         }
     }
 
-    /**
-     * 특정 카테고리 게시판에 글 쓰는 메서드
-     *  @param request {@link com.example.communitydemo.domain.board.dto.ArticleDto.ArticleBaseResponse}
-     */
-    public ArticleDto.ArticleBaseResponse createArticle(
-      ArticleDto.ArticleCreateRequest request
-    ){
-        System.out.println(request.getCategory_id());
-        Category category = categoryRepository.findById(request.getCategory_id())
-                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
-
-        Article article = new Article();
-        article.setTitle(request.getTitle());
-        article.setContent(request.getContent());
-        article.setCategory(category);
-        article.setPassword(request.getPassword());
-
-        return ArticleDto.ArticleBaseResponse.toDTO(articleRepository.save(article));
-
-    }
 }

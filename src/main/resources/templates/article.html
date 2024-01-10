@@ -28,7 +28,7 @@
         <!-- p 요소: 유연한 너비 할당 -->
         <div class="col" style="flex-grow: 1; min-width: 0;"> <!-- flex-grow를 추가하여 공간 채우기 -->
             <p style="word-break: break-all; margin-bottom: 0;"> <!-- margin-bottom: 0; 추가 -->
-                fdskajflksdajlfkjsadlkfjlksadjflsajlkfdskajflksdajlfkjsadlkfjlksadjflsajlkfdskajflksdajlfkjsadlkfjlksadjflsajlk...
+
             </p>
         </div>
 
@@ -42,8 +42,7 @@
 
 
 
-<form th:action="@{/comment(articleId=${article.id})}" method="post" class="mt-4 p-3 border-top border-2 border-primary">
-
+<form th:action="@{/article/{articleId}/comment(articleId=${article.id})}" method="post" class="mt-4 p-3 border-top border-2 border-primary">
     <label for="comment-area">댓글</label>
     <div class="row mb-3">
         <div class="col" style="max-width: 160px">

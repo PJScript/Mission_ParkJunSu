@@ -35,19 +35,5 @@ public class CategoryController {
         return "articleWrite";
     }
 
-    /**
-     * 게시글 작성 컨트롤러. @ModelAttribute 를 통해 dto로 인자를 컨트롤 할 수 있음
-     *
-     * @param request {@link com.example.communitydemo.domain.board.dto.ArticleDto.ArticleCreateRequest}
-     */
-    @PostMapping
-    public String write(Model model,
-                       @ModelAttribute ArticleDto.ArticleCreateRequest request
-                        ) {
-        Long newId = categoryService.createArticle(request).getId();
-        return String.format("redirect:/article/%d", newId);
-
-    }
-
 
 }
