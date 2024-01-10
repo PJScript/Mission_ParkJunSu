@@ -17,8 +17,8 @@ public class ArticleDto {
 
 
     /**
-     * @Field id 게시물의 고유 아이디
-     * @Field Category {@link com.example.communitydemo.domain.board.entity.Category}
+     * @Field id - 게시물의 고유 아이디
+     * @Field Category - {@link com.example.communitydemo.domain.board.entity.Category}
      */
     @Getter
     @Setter
