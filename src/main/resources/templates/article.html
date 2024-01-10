@@ -7,7 +7,13 @@
     <title>게시글 상세</title>
 </head>
 <body class="p-5">
-<h1 th:text="${category.label}" class="border-bottom border-primary border-3 pb-2">자유게시판</h1>
+<div class="row border-bottom border-primary border-3 pb-2">
+    <h1 th:text="${category.label}" class="col"></h1>
+    <a href="/" class="btn btn-grey col" style="max-width: 100px">게시판 목록</a>
+    <a th:href="@{/category/{category_value}(category_value=${category.value}) }" class="btn btn-gray col"
+       style="max-width: 100px">글 목록</a>
+</div>
+
 
 <div class="p-3 border-bottom border-secondary border-1">
     <b th:text="${article.title}" style="font-size: 18px">제목</b>
@@ -52,11 +58,11 @@
                 [[${item.created_at}]]
             </div>
 
-                <a
-                        th:href="@{/article/{article_id}/comment/{comment_id}/delete/password-check(article_id=${article.id},comment_id=${item.id})}"
-                        class="col btn btn-sm"
-                        style="max-width: 44px; max-height: 30px; background: rgb(128,128,128,0.3); color: red; ">삭제
-                </a>
+            <a
+                    th:href="@{/article/{article_id}/comment/{comment_id}/delete/password-check(article_id=${article.id},comment_id=${item.id})}"
+                    class="col btn btn-sm"
+                    style="max-width: 44px; max-height: 30px; background: rgb(128,128,128,0.3); color: red; ">삭제
+            </a>
 
 
         </div>
