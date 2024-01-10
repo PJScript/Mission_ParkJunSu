@@ -3,8 +3,10 @@ package com.example.communitydemo.domain.board.controller;
 
 
 import com.example.communitydemo.domain.board.dto.ArticleDto;
+import com.example.communitydemo.domain.board.dto.CategoryDto;
 import com.example.communitydemo.domain.board.dto.CommentDto;
 import com.example.communitydemo.domain.board.entity.Article;
+import com.example.communitydemo.domain.board.entity.Category;
 import com.example.communitydemo.domain.board.service.ArticleService;
 import com.example.communitydemo.domain.board.service.CategoryService;
 import com.example.communitydemo.domain.board.service.CommentService;
@@ -30,6 +32,7 @@ import java.util.Optional;
 public class ArticleController {
     private final ArticleService articleService;
     private final CommentService commentService;
+    private final CategoryService categoryService;
 
 
     /**
@@ -38,9 +41,15 @@ public class ArticleController {
      */
     @GetMapping("{id}")
     public String articleReadView(Model model, @PathVariable Long id) {
-        model.addAttribute("article",articleService.articleRead(id));
+
+        ArticleDto.ArticleBaseResponse article = ArticleDto.ArticleBaseResponse.toDTO(articleService.articleRead(id));
+        model.addAttribute("article",article);
+
         List<CommentDto.CommentBaseResponse> comments = commentService.getComment(id);
         model.addAttribute("comments",comments);
+
+        CategoryDto.CategoryBaseResponse category = categoryService.findById(article.getCategory().getId());
+        model.addAttribute("category",category);
         System.out.println("아티클 요청");
         return "article";
     }
@@ -123,7 +132,8 @@ public class ArticleController {
             Long token = id; // 일회용 토큰 생성
             return "redirect:/article/" + id + "/modify?token=" + token;
         } else {
-            return "redirect:/";
+            return "passwordError";
+
         }
     }
 
@@ -146,7 +156,7 @@ public class ArticleController {
                     .map(article -> "redirect:/category/" + article.getCategory().getValue())
                     .orElse("redirect:/");
         }else{
-            return "home";
+            return "passwordError";
         }
 
 

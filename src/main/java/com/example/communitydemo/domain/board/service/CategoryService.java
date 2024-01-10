@@ -71,6 +71,7 @@ public class CategoryService {
      */
     public List<ArticleDto.ArticleListPreviewResponse> getArticleListPreview(String category_value){
         List<Article> articles = articleRepository.findArticleByCategory(category_value);
+
         if(articles.isEmpty()){
             return null;
         }else{

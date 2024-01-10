@@ -9,10 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
-    @Query("SELECT a FROM Article a WHERE a.category.value = ?1")
-    List<Article> findArticleByCategory(String category_value);
+    @Query("SELECT a FROM Article a WHERE a.category.value = :categoryValue AND a.is_deleted = false")
+    List<Article> findArticleByCategory(@Param("categoryValue") String categoryValue);
 
 
 
@@ -20,5 +21,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Modifying
     @Query("UPDATE Article a SET a.is_deleted = true WHERE a.id = ?1")
     Integer updateArticleLogicalDelete(@Param("id") Long id);
+
+
+
 
 }

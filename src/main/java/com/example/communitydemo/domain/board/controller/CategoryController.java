@@ -1,11 +1,14 @@
 package com.example.communitydemo.domain.board.controller;
 
 import com.example.communitydemo.domain.board.dto.ArticleDto;
+import com.example.communitydemo.domain.board.entity.Article;
 import com.example.communitydemo.domain.board.repository.CategoryRepository;
 import com.example.communitydemo.domain.board.service.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/category")
@@ -21,6 +24,8 @@ public class CategoryController {
             Model model,
             @PathVariable String value
     ) {
+
+
         model.addAttribute("articles", categoryService.getArticleListPreview(value));
         model.addAttribute("category", categoryService.findByValue(value));
         return "board";

@@ -74,5 +74,11 @@ public class CommentDto {
         }
     }
 
+    @Getter
+    @Setter
+    public static class CommentDeleteRequest{
+        private String password;
+    }
+
 
 }

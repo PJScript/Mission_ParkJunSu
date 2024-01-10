@@ -7,7 +7,7 @@
     <title>게시글 상세</title>
 </head>
 <body class="p-5">
-<h1 th:text="${article.title}" class="border-bottom border-primary border-3 pb-2">자유게시판</h1>
+<h1 th:text="${category.label}" class="border-bottom border-primary border-3 pb-2">자유게시판</h1>
 
 <div class="p-3 border-bottom border-secondary border-1">
     <b th:text="${article.title}" style="font-size: 18px">제목</b>
@@ -25,7 +25,7 @@
     <a th:href="@{/article/{id}/delete/password-check(id=${article.id})}" class="btn mt-3">삭제하기</a>
 
 </div>
-<div th:if="${comments.isEmpty()}">
+<div class="mt-3" th:if="${comments.isEmpty()}">
     댓글이 없습니다
 </div>
 <ul th:unless="${comments.isEmpty()}"
@@ -52,10 +52,11 @@
                 [[${item.created_at}]]
             </div>
 
-                <button
+                <a
+                        th:href="@{/article/{article_id}/comment/{comment_id}/delete/password-check(article_id=${article.id},comment_id=${item.id})}"
                         class="col btn btn-sm"
                         style="max-width: 44px; max-height: 30px; background: rgb(128,128,128,0.3); color: red; ">삭제
-                </button>
+                </a>
 
 
         </div>

@@ -15,4 +15,9 @@ public class RootController {
         model.addAttribute("category",categoryService.findAllCategory());
         return "home";
     }
+
+    @GetMapping("password-error")
+    public String passwordError(){
+        return "passwordError";
+    }
 }
