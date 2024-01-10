@@ -42,7 +42,7 @@ public class ArticleController {
     @GetMapping("{id}")
     public String articleReadView(Model model, @PathVariable Long id) {
 
-        ArticleDto.ArticleBaseResponse article = ArticleDto.ArticleBaseResponse.toDTO(articleService.articleRead(id));
+        ArticleDto.ArticleBaseResponse article = articleService.articleRead(id);
         model.addAttribute("article",article);
 
         List<CommentDto.CommentBaseResponse> comments = commentService.getComment(id);
@@ -50,7 +50,6 @@ public class ArticleController {
 
         CategoryDto.CategoryBaseResponse category = categoryService.findById(article.getCategory().getId());
         model.addAttribute("category",category);
-        System.out.println("아티클 요청");
         return "article";
     }
 
@@ -141,17 +140,12 @@ public class ArticleController {
      * 게시글 삭제시 비밀번호 체크
      * @param id 게시글 고유 번호
      */
-    @PostMapping("{id}/delete/password-check")
-    public String articleDeletePasswordCheck(
-            @PathVariable Long id,
-            @ModelAttribute ArticleDto.ArticlePasswordCheckRequest request
+    @PostMapping("{id}/delete")
+    public String articleDelete(@PathVariable Long id,   @ModelAttribute ArticleDto.ArticlePasswordCheckRequest request
     ) {
-        boolean isPossible = articleService.articlePasswordCheck(id, request);
-
-
+        boolean isPossible = articleService.articlePasswordCheck(id,request);
         if(isPossible){
             Optional<Article> updatedArticle = articleService.delete(id);
-
             return updatedArticle
                     .map(article -> "redirect:/category/" + article.getCategory().getValue())
                     .orElse("redirect:/");
@@ -159,7 +153,7 @@ public class ArticleController {
             return "passwordError";
         }
 
-
+        // TODO: 인자로 받은 id에 해당하는 게시물의 password 를 비교후 삭제 가능 여부 처리
     }
 
     /**
@@ -173,20 +167,13 @@ public class ArticleController {
             Long id,
             @ModelAttribute ArticleDto.ArticleUpdateReuqest request
             ) {
-        System.out.printf("요청 도착 테스트");
-
         Long newId = articleService.articleUpdate(id,request).getId();
         return String.format("redirect:/article/%d", newId);
 
-        // TODO: 게시글 최종 수정 버튼 클릭 시 비밀번호 다시 체크
     }
 
     // 게시글 삭제
-    @PostMapping("{id}/delete")
-    public void articleDelete(@PathVariable Long id, @RequestParam("password") String password
-    ) {
-        // TODO: 인자로 받은 id에 해당하는 게시물의 password 를 비교후 삭제 가능 여부 처리
-    }
+
 
 
     // 게시글 이미지 추가

@@ -28,8 +28,10 @@ public class ArticleService {
      * 하나의 article을 조회하는 메서드
      * @param id
      */
-    public Article articleRead(Long id){
-        return articleRepository.findById(id).orElseThrow();
+    public ArticleDto.ArticleBaseResponse articleRead(Long id){
+        Article article = articleRepository.findById(id).orElseThrow();
+
+        return ArticleDto.ArticleBaseResponse.toDTO(article);
 
     }
 
