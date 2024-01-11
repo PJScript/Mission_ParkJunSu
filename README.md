@@ -4,7 +4,76 @@
 ## 프로젝트 설명
 익명 게시판 프로젝트 입니다. 
 
+### 홈 화면
+> 자유게시판, 개발게시판, 일상게시판, 사건사고게시판, 전체게시판
+> 
+![스크린샷 2024-01-11 오전 9.46.17.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2F5q%2Flmlg7hgs0w32qnzv3kjt2n5h0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_kwQLRo%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%209.46.17.png)
 
+![스크린샷 2024-01-11 오전 9.45.20.png](..%2F..%2FDesktop%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%209.45.20.png)
+- 게시판의 신규 생성 및 관리를 위해 각 게시판은 category 라는 테이블에서 관리합니다.
+- 게시판 삭제시 그 게시판과 관련된 사이드 이펙트가 발생 할 수 있어서 **is_delete** 라는 컬럼으로 **논리적 삭제**를 처리하고 있습니다.
+- sort_order 컬럼으로 게시판의 정렬순서를 바꿀 수 있도록 설계해두었습니다. ( 현재 화면단에서는 해당 컬럼을 참조하지 않고 그대로 보여주고 있습니다 )
+- label 이라는 컬럼으로 유저에게 실제 보여질 이름을 지정할 수 있습니다. 
+- value 라는 컬럼으로 url에 추가할 값 혹은 내부적으로 사용할 카테고리의 고유 값을 지정해두었습니다.
+
+### 게시글 목록 화면
+> 나중에 쓴 글이 최상단으로 올라오도록 sql문에 조건을 걸어두었습니다.
+ 
+
+![스크린샷 2024-01-11 오전 9.54.42.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2F5q%2Flmlg7hgs0w32qnzv3kjt2n5h0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_NZFnFz%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%209.54.42.png)
+![스크린샷 2024-01-11 오전 9.54.02.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2F5q%2Flmlg7hgs0w32qnzv3kjt2n5h0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_uHk9om%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%209.54.02.png)
+- **category_id** 컬럼으로 어떤 게시판에 쓰여진 글인지 구분하고 있습니다.
+- 게시글에 비밀번호 컬럼을 두어 추후 삭제 및 수정이 가능하도록 해두었습니다.
+- 게시글을 물리적으로 삭제하면 그와 연관있는 댓글 혹은 이미지들이 게시글을 참조하지 못하는 문제가 있어서 에러가 발생 할 수 있습니다. 이를 **is_deleted** 컬럼을 두어 논리적으로 삭제할 수 있도록 설계 했습니다.
+- 글쓰기 버튼 클릭 -> 글쓰기 화면
+- 게시판 목록 버튼 클릭 -> 홈 ( 게시판 목록이 보이는 화면 )
+
+**추가**: db 이미지를 보면 비밀번호가 그대로 노출되고 있는데 리팩토링 할때 비밀번호를 암호화 해서 저장하도록 수정 할 계획 입니다.
+
+
+### 게시글 보기 화면
+> 게시판 이름, 게시글의 제목, 게시글의 본문, 작성일 등을 표시합니다. 수정 및 삭제, 댓글 작성 및 삭제 모두 해당 페이지에서 할 수 있습니다.
+> 
+![스크린샷 2024-01-11 오전 9.39.49.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2F5q%2Flmlg7hgs0w32qnzv3kjt2n5h0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_uzD0G3%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%209.39.49.png)
+- 어떤 게시판에 쓰여진 글인지 확인 할 수 있도록 구현했습니다.
+- 상단 오른쪽에 게시판 목록, 글 목록으로 이동할 수 있는 편의기능을 구현했습니다.
+- 댓글 작성시 닉네임을 입력할 수 있도록 구현했습니다.
+- 수정과 삭제 (게시글 댓글) 버튼 클릭 시 비밀번호 입력 화면으로 이동합니다.
+
+
+### 비밀번호 입력 화면
+> 게시글 화면에서 수정, 삭제 버튼 클릭 시 아래 화면으로 이동합니다. 게시글 삭제인지 댓글 삭제인지 등 어떤 작업인지 판별하는 작업은 url로 처리합니다.
+> 비밀번호가 같으면 게시글을 삭제하고 해당 해당 게시글이 있떤 게시판으로 다시 이동합니다. 
+> 
+![스크린샷 2024-01-11 오전 10.10.48.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2F5q%2Flmlg7hgs0w32qnzv3kjt2n5h0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_Jxj1gh%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%2010.10.48.png)
+
+<br />
+
+
+![스크린샷 2024-01-11 오전 10.13.51.png](..%2F..%2FDesktop%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%2010.13.51.png)
+게시글 삭제 버튼 클릭시 비밀번호 체크 화면으로 이동시켜주는 `controller` 입니다.
+게시글의 고유 `id` 값을 받고 이를 전달 해줍니다.
+
+<br />
+
+![스크린샷 2024-01-11 오전 10.20.13.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2F5q%2Flmlg7hgs0w32qnzv3kjt2n5h0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_wpSDyu%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%2010.20.13.png)
+이후 비밀번호 체크 화면단에서는 `submit` 버튼 클릭시 `form` 태그를 통해 실제 삭제 요청을 전송합니다. 이때 위에서 전달받은 `id`를 포함하여 전송합니다.
+
+<br />
+
+![스크린샷 2024-01-11 오전 10.22.29.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2F5q%2Flmlg7hgs0w32qnzv3kjt2n5h0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_geMbP2%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%2010.22.29.png)
+조금전 보낸 요청은 위 사진의 컨트롤러에서 받아서 삭제 처리를 합니다. 해당 컨트롤러에서는 `articleService.articlePasswordCheck`를 호출하여 비밀번호 체크를 하고 있습니다.
+
+<br />
+
+![스크린샷 2024-01-11 오전 10.26.28.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2F5q%2Flmlg7hgs0w32qnzv3kjt2n5h0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_oqydAu%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%2010.26.28.png)
+`articleService` 에는 조금전 호출한 메서드가 구현되어 있습니다. 인자로 받을 값이 변경 될 가능성을 염두해 `ArticleDto.ArticlePasswordCheckRequest` 라는 공통 dto 사용하고 있습니다.
+
+<br />
+
+
+![스크린샷 2024-01-11 오전 10.30.54.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2F5q%2Flmlg7hgs0w32qnzv3kjt2n5h0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_FcvilX%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%2010.30.54.png)
+비밀번호 확인 결과 입력값이 다를때는 `false`를 리턴하고 controller 에서는 이 값을 토대로 비밀번호 에러 페이지로 이동시킵니다.
 
 ### Service
 <details>
