@@ -305,9 +305,7 @@ git clone https://github.com/PJScript/Mission_ParkJunSu.git
 그런데 `order`는 `order by`를 위한 예약어 였고 해당 이름으로는 컬럼을 생성할 수가 없었습니다. <br/>
 `sort_order` 라는 컬럼으로 변경하여 해결했습니다.
 
-
-
-
+</details>
 
 
 
