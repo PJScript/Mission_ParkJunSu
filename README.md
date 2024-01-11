@@ -69,7 +69,7 @@
 <br />
 
 ![스크린샷 2024-01-11 오전 10.49.36.png](readMeImages%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%2010.49.36.png)
-조금전 보낸 요청은 위 사진의 컨트롤러에서 받아서 삭제 처리를 합니다. <br/> 해당 컨트롤러에서는 `articleService.articlePasswordCheck`를 호출하여 비밀번호 체크를 하고 있습니다.
+<br/>조금전에 보낸 요청은 위 사진의 컨트롤러에서 받아서 삭제 처리를 합니다. <br/> 해당 컨트롤러에서는 `articleService.articlePasswordCheck`를 호출하여 비밀번호 체크를 하고 있습니다.
 
 <br />
 
