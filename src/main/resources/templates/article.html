@@ -16,8 +16,12 @@
 
 
 <div class="p-3 border-bottom border-secondary border-1">
-    <b th:text="${article.title}" style="font-size: 18px">제목</b>
-    <p th:text="${article.created_at}" style="font-size:14px">2024.1.10 13:24:02</p>
+    <div class="row">
+        <b class="col" th:text="${article.title}" style="font-size: 18px">제목</b>
+        <p class="col" th:text="${#temporals.format(article.created_at,'yyyy-MM-dd HH:mm:ss')}"
+           style="font-size:14px;text-align: right; max-width: 200px;">2023.1.1</p>
+    </div>
+
 
     <div>
 
@@ -55,7 +59,7 @@
         <!-- 1일전과 X 버튼: 고정된 너비 할당 -->
         <div class="row" style="white-space: nowrap; max-width: 270px"> <!-- col-auto 클래스 사용 -->
             <div class="col" style="max-width: 200px; color:grey; font-size:14px; display: flex; justify-content: end;">
-                [[${item.created_at}]]
+                <p class="col" th:text="${#temporals.format(article.created_at,'yyyy-MM-dd HH:mm:ss')}" style="font-size:14px;text-align: right; max-width: 200px;">2023.1.1</p>
             </div>
 
             <a

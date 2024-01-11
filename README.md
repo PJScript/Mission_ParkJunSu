@@ -2,8 +2,11 @@
 
 
 ## 프로젝트 설명
-123 123 123
+익명 게시판 프로젝트 입니다. 
 
+
+
+### Service
 <details>
   <summary> 게시판 기능 </summary>
 
