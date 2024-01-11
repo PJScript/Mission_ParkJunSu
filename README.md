@@ -4,6 +4,17 @@
 ## 프로젝트 설명
 익명 게시판 프로젝트 입니다. 
 
+## 시작하기
+
+```sh
+git clone https://github.com/PJScript/Mission_ParkJunSu.git
+```
+1. 클론 후 파일을 실행 시켜주세요.
+2. 이후 아래 주소로 접속 해주세요
+http://localhost:8080
+
+
+
 <br />
 
 ### 홈 화면
@@ -94,7 +105,7 @@
 ![스크린샷 2024-01-11 오전 11.05.13.png](readMeImages%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%2011.05.13.png)
 - 게시글 수정 화면에서 제목, 내용을 수정할 수 있습니다.
 - 이 화면에 들어오기 위해서는 url에 `token`이라는 값이 필요합니다.
-
+t
 ![스크린샷 2024-01-11 오전 11.07.28.png](readMeImages%2F%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-01-11%20%EC%98%A4%EC%A0%84%2011.07.28.png)
 - token의 값과 article의 값이 같으면 인증된 것으로 판단하고 해당 페이지로 이동 시켜줍니다.
 - 해당 token이 없거나 값이 다르면 에러페이지 or 권한이 없습니다 페이지로 이동합니다.
@@ -252,11 +263,7 @@ boolean isPossible = Long.parseLong(token) == id;
 
 
 
-## 시작하기
 
-```sh
-git clone https://github.com/PJScript/Mission_ParkJunSu.git
-```
 
 
 
