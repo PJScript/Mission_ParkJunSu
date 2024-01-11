@@ -45,6 +45,7 @@ public class Article {
     @LastModifiedDate
     @Column(nullable = false)
     private LocalDateTime updated_at;
+
     private boolean is_deleted;
 
     @Override
